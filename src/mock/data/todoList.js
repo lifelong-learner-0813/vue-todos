@@ -1,7 +1,7 @@
-import Mock from 'mockjs'
+import Mock from 'mockjs';
 
-let Todos = []
-const COUNT = [1, 2, 3, 4, 5]
+let Todos = []; // 定义我们需要的数据
+const COUNT = [1, 2, 3, 4, 5];
 for (let i = 1; i <= COUNT.length; i++) {
   Todos.push(Mock.mock({ // 根据数据模板生成模拟数据。
     id: Mock.Random.guid(), // 随机id
@@ -13,10 +13,10 @@ for (let i = 1; i <= COUNT.length; i++) {
         text: Mock.Random.cparagraph(2), // 随机内容
         isDelete: false, //是否删除
         checked: Mock.Random.boolean() //是否完成
-      }
+      };
     })
-  }))
+  }));
 }
 export {
   Todos
-}
+};

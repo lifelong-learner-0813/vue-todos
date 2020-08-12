@@ -3,7 +3,8 @@
   .content-scrollable {
     background: @color-empty;
     top: 5em !important;
-  } // Custom nav for lists-show
+  }
+  // Custom nav for lists-show
   nav {
     background: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
     height: 5em;
@@ -20,7 +21,7 @@
       cursor: pointer;
       font-size: 1.125em; // 18px
       white-space: nowrap;
-          margin: 10px 0px;
+      margin: 10px 0px;
       .title-wrapper {
         .ellipsized;
         color: @color-ancillary;
@@ -82,14 +83,17 @@
           margin-right: .5rem;
         }
       }
-    } // Hide & show options and nav icons
+    }
+    // Hide & show options and nav icons
     @media screen and (min-width: 40em) {
       .nav-group:not(.right) {
         display: none !important;
       }
+
       .options-mobile {
         display: none;
       }
+
       .options-web {
         display: block;
       }

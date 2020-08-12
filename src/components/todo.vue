@@ -44,7 +44,7 @@
     components: {
       item
     },
-    data () {
+    data() {
       return {
         todo: { // 详情内容
           title: '星期一',
@@ -61,7 +61,7 @@
       }
     },
     methods: {
-      onAdd () {
+      onAdd() {
         this.items.push({
           checked: false, text: this.text, isDelete: false
         })

@@ -21,6 +21,6 @@
   }
 </script>
 
-<style lang="less" >
+<style lang="less">
   @import '../common/style/layouts.less';
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="list-todos">
-    <a class="list-todo activeListClass"  v-for="(item, key) in items" v-bind:key="key">
-      <span class="icon-lock" v-if="item.locked">
-      </span>
-      <span class="count-list" v-if="item.count">
+    <a class="list-todo activeListClass" v-for="(item, key) in items" v-bind:key="key"
+       :class="{'active': item.id === todoId}" @click="goList(item.id)">
+      <span class="icon-lock" v-if="item.locked"></span>
+      <span class="count-list" v-if="item.count > 0">
         {{item.count}}
       </span>
       {{item.title}}
@@ -16,14 +16,32 @@
 </template>
 
 <script>
+  import {getTodoList, addTodo} from '../api/api'
+
   export default {
-    data () {
+    data() {
       return {
-        items: [
-          {title: '星期一', count: 1, locked: true},
-          {title: '星期二', count: 2, locked: true},
-          {title: '星期三', count: 3, locked: false}
-        ]
+        items: [],
+        todoId: ''
+      }
+    },
+    created() {
+      getTodoList({}).then(res => {
+        const TODOS = res.data.todos
+        this.items = TODOS
+        this.todoId = TODOS[0].id
+      })
+    },
+    methods: {
+      goList(id) {
+        this.todoId = id
+      },
+      addTodoList() {
+        addTodo({}).then(res => {
+          const TODOS = res.data.todos
+          this.todoId = TODOS[TODOS.length - 1].id
+          this.items = TODOS
+        })
       }
     }
   }

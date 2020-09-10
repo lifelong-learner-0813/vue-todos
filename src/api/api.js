@@ -7,7 +7,8 @@ export const getTodoList = (params) => {
 }
 
 export const addTodo = (params) => {
-  return axios.post('/todo/list', params).then(res => {
-    return res.data
-  })
+  return axios.post('/todo/list', params)
+    .then(res => {
+      return res.data
+    })
 }

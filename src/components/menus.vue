@@ -8,7 +8,7 @@
       </span>
       {{item.title}}
     </a>
-    <a class="link-list-new">
+    <a class="link-list-new" @click="addTodoList">
       <span class="icon-plus"></span>
       新增
     </a>
@@ -25,11 +25,17 @@
         todoId: ''
       }
     },
+    watch: {
+      'todoId'(id) {
+        this.$router.push({name: 'todo', params: {id: id}})
+      }
+    },
     created() {
       getTodoList({}).then(res => {
         const TODOS = res.data.todos
         this.items = TODOS
         this.todoId = TODOS[0].id
+        console.log(res.data)
       })
     },
     methods: {
@@ -37,10 +43,12 @@
         this.todoId = id
       },
       addTodoList() {
-        addTodo({}).then(res => {
-          const TODOS = res.data.todos
-          this.todoId = TODOS[TODOS.length - 1].id
-          this.items = TODOS
+        addTodo({}).then(data => {
+          getTodoList({}).then(res => {
+            const TODOS = res.data.todos
+            this.todoId = TODOS[TODOS.length - 1].id
+            this.items = TODOS
+          })
         })
       }
     }

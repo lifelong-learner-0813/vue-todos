@@ -51,7 +51,7 @@ export default {
     mock.onPost('/todo/list').reply(config => {
       Todos.push({
         id: Mock.Random.guid(),
-        title: 'newList',
+        title: Mock.Random.first(),
         isDelete: false,
         locked: false,
         record: []
@@ -68,7 +68,21 @@ export default {
 
     mock.onPost('/todo/addRecord').reply(config => {
       let {id, text} = JSON.parse(config.data)
-      Todos.some()
+      Todos.some(todo => {
+        if (todo.id === id) {
+          todo.record.push({
+            text: text,
+            isDelete: false,
+            checked: false
+          })
+          return true
+        }
+      })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200])
+        },200)
+      })
     })
   }
 }

@@ -12,3 +12,13 @@ export const addTodo = (params) => {
       return res.data
     })
 }
+
+export const getTodo = params => {
+  return axios.get('/todo/listId', {
+    params: params
+  })
+}
+
+export const addRecord = params => {
+  return axios.post('/todo/addRecord', params).then(res => res.data)
+}

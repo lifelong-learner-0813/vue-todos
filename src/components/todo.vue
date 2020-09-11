@@ -30,8 +30,8 @@
     </nav>
     <div class="content-scrollable list-items">
       <!--容器下半部分-->
-      <div v-for="(obj, key) in items" :key="key">
-        <item :item="obj"></item>
+      <div v-for="item in items">
+        <item :item="item"></item>
       </div>
     </div>
   </div>
@@ -39,34 +39,55 @@
 
 <script>
   import item from './item'
+  import {getTodo, addRecord} from '../api/api'
 
   export default {
     components: {
       item
     },
+    watch: {
+      '$route.params.id'() {
+        this.init()
+      }
+    },
     data() {
       return {
-        todo: { // 详情内容
-          title: '星期一',
-          count: 12,
-          locked: false
-        },
-        items: [ // 待办单项列表
-          {checked: true, text: '新的一天', isDelete: false, id: 1},
-          {checked: false, text: '新的一天', isDelete: false, id: 2},
-          {checked: false, text: '新的一天', isDelete: false, id: 3},
-          {checked: false, text: '', isDelete: false, id: 4}
-        ],
+        todo: {},
+        items: [],
         text: '' // 新增待办单项绑定的值
       }
     },
+    created() {
+      this.init()
+    },
     methods: {
-      onAdd() {
-        this.items.push({
-          checked: false, text: this.text, isDelete: false
+      init() {
+        const ID = this.$route.params.id
+        getTodo({id: ID}).then(resp => {
+          let {id, title, count, isDelete, locked, record} = resp.data.todo
+          this.items = record
+          this.todo = {
+            id: id,
+            title: title,
+            count: count,
+            locked: locked,
+            isDelete: isDelete,
+            // record: record,
+          }
         })
-        this.text = ''
-      }
+      },
+      onAdd() {
+        const ID = this.$route.params.id
+        addRecord({id: ID, text: this.text}).then(res => {
+          this.text = ''
+          this.init()
+        })
+
+        // this.items.push({
+        //   checked: false, text: this.text, isDelete: false
+        // })
+        // this.text = ''
+      },
     }
   }
 </script>
